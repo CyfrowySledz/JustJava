@@ -15,4 +15,6 @@
     <string name="thank_you">Thank you!</string>
     <string name="yes">Yes</string>
     <string name="no">No</string>
+    <string name="max_coffees_warning">Sorry, you can\'t order more than <xliff:g id="quantity">%d</xliff:g> coffees!</string>
+    <string name="min_coffees_warning">Sorry, you can\'t order less than <xliff:g id="quantity">%d</xliff:g> coffees!</string>
 </resources>

@@ -38,7 +38,6 @@ public class MainActivity extends AppCompatActivity {
 
         total = calculatePrice(quantity, hasWhippedCream, hasChocolate);
         summary = createOrderSummary(total, hasWhippedCream, hasChocolate);
-        displayMessage(summary);
 
         Intent intent = new Intent(Intent.ACTION_SENDTO);
         intent.setData(Uri.parse("mailto:"));
@@ -54,14 +53,9 @@ public class MainActivity extends AppCompatActivity {
         quantityTextView.setText("" + number);
     }
 
-    public void displayMessage(String message) {
-        TextView orderSummaryTextView = (TextView) findViewById(R.id.order_summary_text_view);
-        orderSummaryTextView.setText(message);
-    }
-
     public void increment (View view){
         if (quantity == 5) {
-            Toast toast = Toast.makeText(this, "You can't have more than " + quantity + " coffees!", Toast.LENGTH_SHORT);
+            Toast toast = Toast.makeText(this, getString(R.string.max_coffees_warning, quantity), Toast.LENGTH_SHORT);
             toast.show();
             return;
         }
@@ -71,7 +65,7 @@ public class MainActivity extends AppCompatActivity {
 
     public void decrement (View view) {
         if (quantity == 0) {
-            Toast toast = Toast.makeText(this, "You can't have less then 0 coffee!", Toast.LENGTH_SHORT);
+            Toast toast = Toast.makeText(this, getString(R.string.min_coffees_warning, quantity), Toast.LENGTH_SHORT);
             toast.show();
             return;
         }
@@ -109,7 +103,7 @@ public class MainActivity extends AppCompatActivity {
         summary += "\n" + getString(R.string.order_summary_topping1) + " " + cream;
         summary += "\n" + getString(R.string.order_summery_topping2) + " " + chocolate;
         summary += "\n" + getString(R.string.quantity) + ": " + quantity;
-        summary += "\n" + getString(R.string.total) + ": " + currencySymbol + " " + new DecimalFormat("##.##").format(total);
+        summary += "\n" + getString(R.string.total) + ": " + new DecimalFormat("##.##").format(total) + " " + currencySymbol;
         summary += "\n" + getString(R.string.thank_you);
         return summary;
 
