@@ -1,5 +1,7 @@
 package com.example.android.justjava;
 
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
@@ -17,6 +19,7 @@ public class MainActivity extends AppCompatActivity {
     Locale locale = Locale.getDefault();
     Currency currency = Currency.getInstance(locale);
     String currencySymbol = currency.getSymbol();
+    String name = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,10 +34,19 @@ public class MainActivity extends AppCompatActivity {
         boolean hasChocolate = chocolateCheckBox.isChecked();
         float total = 0.0f;
         String summary = "";
+        String subject = getString(R.string.app_name) + " order for " + name;
 
         total = calculatePrice(quantity, hasWhippedCream, hasChocolate);
         summary = createOrderSummary(total, hasWhippedCream, hasChocolate);
         displayMessage(summary);
+
+        Intent intent = new Intent(Intent.ACTION_SENDTO);
+        intent.setData(Uri.parse("mailto:"));
+        intent.putExtra(Intent.EXTRA_SUBJECT, subject);
+        intent.putExtra(Intent.EXTRA_TEXT, summary);
+        if (intent.resolveActivity(getPackageManager()) != null) {
+            startActivity(intent);
+        }
     }
 
     private void display(int number) {
@@ -83,7 +95,7 @@ public class MainActivity extends AppCompatActivity {
 
     private String createOrderSummary(float total, boolean hasWhippedCream, boolean hasChocolate) {
         EditText nameField = (EditText) findViewById(R.id.name_field);
-        String name = nameField.getText().toString();
+        name = nameField.getText().toString();
 
         String summary = "Name: " + name;
         summary += "\nAdd whipped cream? " + hasWhippedCream;
