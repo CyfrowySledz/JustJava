@@ -96,13 +96,21 @@ public class MainActivity extends AppCompatActivity {
     private String createOrderSummary(float total, boolean hasWhippedCream, boolean hasChocolate) {
         EditText nameField = (EditText) findViewById(R.id.name_field);
         name = nameField.getText().toString();
+        String cream = getString(R.string.no);
+        String chocolate = getString(R.string.no);
 
-        String summary = "Name: " + name;
-        summary += "\nAdd whipped cream? " + hasWhippedCream;
-        summary += "\nAdd chocolate? " + hasChocolate;
-        summary += "\nQuantity: " + quantity;
-        summary += "\nTotal: " + currencySymbol + " " + new DecimalFormat("##.##").format(total);
-        summary += "\nThank you!";
+        if (hasWhippedCream)
+            cream = getString(R.string.yes);
+        if (hasChocolate)
+            chocolate = getString(R.string.yes);
+
+
+        String summary = getString(R.string.order_summary_name, name);
+        summary += "\n" + getString(R.string.order_summary_topping1) + " " + cream;
+        summary += "\n" + getString(R.string.order_summery_topping2) + " " + chocolate;
+        summary += "\n" + getString(R.string.quantity) + ": " + quantity;
+        summary += "\n" + getString(R.string.total) + ": " + currencySymbol + " " + new DecimalFormat("##.##").format(total);
+        summary += "\n" + getString(R.string.thank_you);
         return summary;
 
     }
